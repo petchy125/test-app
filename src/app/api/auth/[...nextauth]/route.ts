@@ -9,7 +9,6 @@ type Credential = {
 };
 
 export const authOptions = {
-  // Configure one or more authentication providers
   pages: {
     signIn: '/signin',
   },

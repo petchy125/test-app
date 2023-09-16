@@ -21,7 +21,7 @@ function Row({
   return (
     <div
       className={tm(
-        'grid gap-[15px] grid-cols-footer max-[1000px]:grid-cols-[repeat(auto-fill,minmax(150px,1fr))]',
+        'grid gap-[15px] grid-cols-footer grid-cols-[repeat(auto-fill,minmax(210px,1fr))] max-[1000px]:grid-cols-[repeat(auto-fill,minmax(150px,1fr))]',
         className
       )}
       {...restProps}

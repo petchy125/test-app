@@ -153,7 +153,7 @@ export function Dropdown({ children, className, ...restProps }: DivProps) {
   return (
     <div
       className={tm(
-        'group-hover/profile:block group-hover/profile:flex-col hidden absolute bg-black p-[10px] top-8 right-[10px]',
+        'group-hover/profile:block group-hover/profile:flex-col hidden absolute bg-black p-[10px] top-8 right-[10px] w-[100px]',
         className
       )}
       {...restProps}
@@ -167,7 +167,7 @@ export function Picture({ className, children, ...restProps }: ButtonProps) {
   return (
     <button
       className={tm(
-        `bg-contain border-0 w-8 h-8 cursor-pointer bg-no-repeat`,
+        `bg-contain border-0 w-8 h-8 cursor-pointer bg-[url('/user.png')] bg-no-repeat`,
         className
       )}
       {...restProps}
