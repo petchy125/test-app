@@ -29,6 +29,7 @@ export default function Hero(props: HeroProps & { className?: string }) {
   };
 
   let banner!: JSX.Element;
+
   if (props.type === 'show') {
     banner = props.show && (
       <>
@@ -94,7 +95,8 @@ export default function Hero(props: HeroProps & { className?: string }) {
     );
   } else {
     banner = (
-      <div className="w-full max-w-screen-2xl">
+      <div className="w-full max-w-screen-2xl" >
+        
         <div
           className={tm(
             'absolute inset-0 -z-10 h-screen w-full',

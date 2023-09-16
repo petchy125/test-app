@@ -1,8 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import _truncate from 'lodash.truncate';
-import _shuffle from 'lodash.shuffle';
 import { useState } from 'react';
 
 import Card from '@/app/ui/card';
@@ -51,7 +49,7 @@ export default function Collections({
                   <Card.Meta>
                     <Card.SubTitle>{show.title ?? show.name}</Card.SubTitle>
                     <Card.Text>
-                      {_truncate(show.overview ?? '', TRUNCATE_OPTIONS)}
+                      {show.overview}
                     </Card.Text>
                   </Card.Meta>
                 </Card.Item>
@@ -91,7 +89,7 @@ export default function Collections({
                   <Card.Meta>
                     <Card.SubTitle>{show.title ?? show.name}</Card.SubTitle>
                     <Card.Text>
-                      {_truncate(show.overview ?? '', TRUNCATE_OPTIONS)}
+                      {show.overview}
                     </Card.Text>
                   </Card.Meta>
                 </Card.Item>

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <section>
-      <Hero
+     <Hero
         className="min-[601px]:h-[114vh] min-[645px]:h-screen"
         type="static"
         src="/home-bg.jpg"
@@ -37,7 +37,7 @@ export default function Page() {
             </OptForm.Text>
           </OptForm>
         </Feature>
-      </Hero>
+        </Hero>
       <Jumbotron.Container>
         {jumboData.map((jumbo) => {
           return (

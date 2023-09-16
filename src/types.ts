@@ -60,3 +60,21 @@ export interface Show {
   vote_average: number;
   vote_count: number;
 }
+
+export interface HeaderProps extends PropsWithChildren{
+  bg: boolean;
+}
+
+export interface HeaderSearchProps {
+  searchTerm: string;
+  setSearchTerm: Function;
+}
+
+export interface HeaderLogoProps {
+  to: string;
+  src: string;
+}
+
+export interface PictureProps {
+  src: string;
+}

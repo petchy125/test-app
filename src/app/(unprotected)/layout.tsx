@@ -19,7 +19,7 @@ export default async function UnprotectedLayout({
     <div className="flex min-h-screen flex-col">
       <Nav.default>
         <Nav.Frame>
-          {/* <Nav.Logo /> */}
+          <Nav.Logo />
           <Nav.ButtonLink href="/signin">Sign In</Nav.ButtonLink>
         </Nav.Frame>
       </Nav.default>
