@@ -69,7 +69,6 @@ export default function Collections({
         <Card key={collection.title}>
           <Card.Title>{collection.title}</Card.Title>
           <Card.Entities>
-            {/* temporarily cut off shows */}
             {collection.shows.slice(0, 5).map((show) => {
               const src = getSafeImageUrl(show.backdrop_path);
               return (

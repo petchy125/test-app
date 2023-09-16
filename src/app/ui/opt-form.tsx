@@ -47,13 +47,13 @@ function Button({ children, className, ...restProps }: ButtonProps) {
       {...restProps}
     >
       {children}
-      {/* <Image
+      <Image
         src="/chevron-right.png"
         className="icon ml-[10px] max-[1000px] max-[1000px]:w-4"
         width={24}
         height={24}
         alt="try now"
-      /> */}
+      />
     </button>
   );
 }

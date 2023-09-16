@@ -6,8 +6,8 @@ import { twMerge as tm } from 'tailwind-merge';
 import Image from 'next/image';
 import { HTMLAttributes, PropsWithChildren, useState } from 'react';
 
-// import logo from '../../../../public/logo.svg';
-// import searchIcon from '../../../../public/search.png';
+import logo from '../../../../public/logo.svg';
+import searchIcon from '../../../../public/search.png';
 import { ButtonProps, DivProps, InputProps, TextLinkProps } from '@/types';
 import { signOut } from 'next-auth/react';
 
@@ -27,19 +27,19 @@ export function Group({ children }: PropsWithChildren) {
   return <div className="flex items-center">{children}</div>;
 }
 
-// export function Logo() {
-//   return (
-//     <Link href="/">
-//       <Image
-//         alt="Nextflix"
-//         src={logo}
-//         height={36}
-//         width={134}
-//         className="mr-10 xl:h-[45px] xl:w-[167px]"
-//       />
-//     </Link>
-//   );
-// }
+export function Logo() {
+  return (
+    <Link href="/">
+      <Image
+        alt="Nextflix"
+        src={logo}
+        height={36}
+        width={134}
+        className="mr-10 xl:h-[45px] xl:w-[167px]"
+      />
+    </Link>
+  );
+}
 
 export function ButtonLink(props: PropsWithChildren<LinkProps>) {
   const { children, ...rest } = props;

@@ -88,7 +88,7 @@ export function Header({ children, className, ...restProps }: DivProps) {
       {...restProps}
     >
       {children}
-      {/* {toggle ? (
+      {toggle ? (
         <Image
           className="icon"
           width={24}
@@ -104,7 +104,7 @@ export function Header({ children, className, ...restProps }: DivProps) {
           src="/add.png"
           alt="open"
         />
-      )} */}
+      )}
     </div>
   );
 }
