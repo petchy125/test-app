@@ -18,8 +18,6 @@ interface CollectionsProps {
   searchedResults: Show[];
 }
 
-const TRUNCATE_OPTIONS = { length: 149 };
-
 export default function Collections({
   collections,
   searchedResults,
