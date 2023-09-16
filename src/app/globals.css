@@ -12,3 +12,14 @@ body {
   color: #333333;
   font-size: 16px;
 }
+
+.open {
+  max-height: 1200px;
+  transition: max-height 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+}
+
+.close {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+}

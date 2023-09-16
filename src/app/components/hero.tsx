@@ -95,7 +95,7 @@ export default function Hero(props: HeroProps & { className?: string }) {
     );
   } else {
     banner = (
-      <div className="w-full max-w-screen-2xl" >
+      <div className="w-full max-w-screen-2xl mx-auto" >
         
         <div
           className={tm(
