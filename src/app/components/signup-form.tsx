@@ -3,20 +3,31 @@
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { signIn } from 'next-auth/react';
-
 import { auth } from '@/lib/firebase';
 import Form from '@/app/ui/form';
 
-export default function SigUp() {
-  const [error, setError] = useState<null | string>(null);
+export default function SignUp() {
+  const [error, setError] = useState(null);
   const [firstName, setFirstName] = useState('');
-  const [email, setEmailAddress] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
+    if (!firstName || !email || !password) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(user.user, { displayName: firstName });
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: firstName });
       signIn('credentials', {
         email,
         password,
@@ -24,7 +35,7 @@ export default function SigUp() {
         callbackUrl: '/series',
       });
     } catch (error) {
-      setError((error as Error).message);
+      setError(error.message);
     }
   };
 
@@ -42,7 +53,7 @@ export default function SigUp() {
         <Form.Input
           placeholder="Email address"
           value={email}
-          onChange={({ target }) => setEmailAddress(target.value)}
+          onChange={({ target }) => setEmail(target.value)}
         />
         <Form.Input
           type="password"
@@ -51,7 +62,7 @@ export default function SigUp() {
           placeholder="Password"
           onChange={({ target }) => setPassword(target.value)}
         />
-        <Form.Submit type="submit" data-testid="sign-in">
+        <Form.Submit type="submit" data-testid="sign-up">
           Sign Up
         </Form.Submit>
       </Form.Base>
@@ -59,7 +70,7 @@ export default function SigUp() {
         Already a user? <Form.Link href="/signin">Sign in now.</Form.Link>
       </Form.Text>
       <Form.TextSmall>
-        {`This page is protected by Google reCAPTCHA to ensure you're not a bot. Learn more.`}
+        This page is protected by Google reCAPTCHA to ensure you're not a bot. Learn more.
       </Form.TextSmall>
     </Form>
   );

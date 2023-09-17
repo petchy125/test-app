@@ -8,7 +8,7 @@ type Credential = {
   password: string;
 };
 
-export const authOptions = {
+const authOptions = {
   pages: {
     signIn: '/signin',
   },
@@ -17,22 +17,26 @@ export const authOptions = {
       name: 'Credentials',
       credentials: {},
       async authorize(credentials): Promise<any> {
-        return await signInWithEmailAndPassword(
-          auth,
-          (credentials as unknown as Credential).email || '',
-          (credentials as unknown as Credential).password || ''
-        )
-          .then((userCredential) => {
-            if (userCredential.user) {
-              return userCredential.user;
-            }
-            return null;
-          })
-          .catch((error) => console.log(error));
+        try {
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            (credentials as unknown as Credential).email || '',
+            (credentials as unknown as Credential).password || ''
+          );
+
+          if (userCredential.user) {
+            return userCredential.user;
+          }
+        } catch (error) {
+          console.error(error);
+        }
+
+        return null;
       },
     }),
   ],
 };
+
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

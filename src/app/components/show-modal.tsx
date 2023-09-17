@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import ReactPlayer from 'react-player/lazy';
-
 import {
   Dialog,
   DialogContent,
@@ -24,31 +23,38 @@ export default function ShowModal({
   toggle,
   toggleHandler,
 }: ShowModalProps) {
-  const [trailer, setTrailer] = useState('');
+  const [trailer, setTrailer] = useState<string>('');
   const [genres, setGenres] = useState<{ id: number; name: string }[]>([]);
   const pathname = usePathname();
 
   useEffect(() => {
-    let mediaType = show?.media_type;
-    if (!mediaType) {
-      mediaType = pathname === '/series' ? 'tv' : 'movie';
-    }
-    (async function () {
-      const resp = await fetch(
-        `https://api.themoviedb.org/3/${mediaType}/${show?.id}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US&append_to_response=videos`
-      );
-      const data = await resp.json();
-      console.log(data);
-      if (data?.videos) {
-        setTrailer(
-          data?.videos.results.find((video: any) => video.type === 'Trailer')
-            ?.key
+    async function fetchShowData() {
+      let mediaType = show?.media_type || (pathname === '/series' ? 'tv' : 'movie');
+
+      try {
+        const resp = await fetch(
+          `https://api.themoviedb.org/3/${mediaType}/${show?.id}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US&append_to_response=videos`
         );
+        const data = await resp.json();
+        console.log(data);
+
+        if (data?.videos) {
+          setTrailer(
+            data.videos.results.find((video: any) => video.type === 'Trailer')?.key || ''
+          );
+        }
+
+        if (data?.genres) {
+          setGenres(data.genres);
+        }
+      } catch (error) {
+        console.error(error);
       }
-      if (data?.genres) {
-        setGenres(data?.genres);
-      }
-    })();
+    }
+
+    if (show.id && show.media_type) {
+      fetchShowData();
+    }
   }, [show.id, show.media_type, toggle, pathname]);
 
   return (
@@ -70,10 +76,10 @@ export default function ShowModal({
               {Math.round((Number(show?.vote_average) / 10) * 100) ?? '-'}%
               Match
             </p>
-            {show?.release_date ? (
-              <p className="text-white">{show?.release_date}</p>
-            ) : show?.first_air_date ? (
-              <p className="text-white">{show?.first_air_date}</p>
+            {show?.release_date || show?.first_air_date ? (
+              <p className="text-white">
+                {show?.release_date ?? show?.first_air_date}
+              </p>
             ) : null}
             {show?.original_language && (
               <span className="grid h-4 w-7 place-items-center text-xs font-bold text-neutral-400 ring-1 ring-neutral-400">

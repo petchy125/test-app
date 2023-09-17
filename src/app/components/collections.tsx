@@ -25,34 +25,41 @@ export default function Collections({
   const [toggleModal, setToggleModal] = useState(false);
   const [selectedShow, setSelectedShow] = useState<Show>({} as Show);
 
+  const renderShowItem = (show: Show) => {
+    const src = getSafeImageUrl(show.backdrop_path);
+    const altText = show.title || show.name || 'show-image';
+
+    return (
+      <Card.Item
+        onClick={() => {
+          setToggleModal(true);
+          setSelectedShow(show);
+        }}
+        className="max-w-[305px] w-full"
+        data-testid="item"
+        key={show.id}
+      >
+        <Image
+          width={305}
+          height={200}
+          src={src}
+          className="w-full cursor-pointer height-auto p-0 m-0 border-0"
+          alt={altText}
+        />
+        <Card.Meta>
+          <Card.SubTitle>{altText}</Card.SubTitle>
+          <Card.Text>{show.overview}</Card.Text>
+        </Card.Meta>
+      </Card.Item>
+    );
+  };
+
   if (searchedResults.length > 0) {
     return (
       <Card.Group>
         <Card>
           <Card.Entities className="flex-wrap justify-center gap-y-12">
-            {searchedResults.map((show) => {
-              const src = getSafeImageUrl(show.backdrop_path);
-              return (
-                <Card.Item
-                  className="first-of-type:ml-0 last-of-type:mr-0"
-                  key={show.id}
-                >
-                  <Image
-                    width={305}
-                    height={200}
-                    className="w-full cursor-pointer height-auto p-0 m-0 border-0"
-                    src={src}
-                    alt={show.title ?? 'show-image'}
-                  />
-                  <Card.Meta>
-                    <Card.SubTitle>{show.title ?? show.name}</Card.SubTitle>
-                    <Card.Text>
-                      {show.overview}
-                    </Card.Text>
-                  </Card.Meta>
-                </Card.Item>
-              );
-            })}
+            {searchedResults.map((show) => renderShowItem(show))}
           </Card.Entities>
         </Card>
       </Card.Group>
@@ -65,34 +72,7 @@ export default function Collections({
         <Card key={collection.title}>
           <Card.Title>{collection.title}</Card.Title>
           <Card.Entities>
-            {collection.shows.slice(0, 5).map((show) => {
-              const src = getSafeImageUrl(show.backdrop_path);
-              return (
-                <Card.Item
-                  onClick={() => {
-                    setToggleModal(true);
-                    setSelectedShow(show);
-                  }}
-                  className="max-w-[305px] w-full"
-                  data-testid="item"
-                  key={show.id}
-                >
-                  <Image
-                    width={305}
-                    height={200}
-                    src={src}
-                    className="w-full cursor-pointer height-auto p-0 m-0 border-0"
-                    alt={show.title ?? 'show-image'}
-                  />
-                  <Card.Meta>
-                    <Card.SubTitle>{show.title ?? show.name}</Card.SubTitle>
-                    <Card.Text>
-                      {show.overview}
-                    </Card.Text>
-                  </Card.Meta>
-                </Card.Item>
-              );
-            })}
+            {collection.shows.slice(0, 5).map((show) => renderShowItem(show))}
           </Card.Entities>
         </Card>
       ))}

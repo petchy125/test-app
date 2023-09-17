@@ -2,37 +2,37 @@
 
 import Image from 'next/image';
 import { twMerge as tm } from 'tailwind-merge';
-
 import PlayIcon from '@/app/ui/icons/play';
 import ExclamationCircleIcon from '@/app/ui/icons/exclamation-circle';
-
-import type { Show } from '@/types';
+import { Show } from '@/types';
 import ShowModal from './show-modal';
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 
-type HeroProps =
-  | {
-      type: 'show';
-      show: Show;
-    }
-  | {
-      type: 'static';
-      src: string;
-      children: React.ReactNode;
-    };
+type HeroProps = {
+  type: 'show';
+  show: Show;
+} | {
+  type: 'static';
+  src: string;
+  children: React.ReactNode;
+};
 
-export default function Hero(props: HeroProps & { className?: string }) {
+export default function Hero({
+  type,
+  show,
+  src,
+  children,
+  className,
+}: HeroProps & { className?: string }) {
   const [toggle, setToggle] = useState(false);
 
   const handleToggleDialog = () => {
     setToggle(true);
   };
 
-  let banner!: React.JSX.Element;
-
-  if (props.type === 'show') {
-    banner = props.show && (
-      <>
+  return (
+    <section className="w-full">
+      {type === 'show' && show && (
         <div className="container w-full max-w-screen-2xl px-14">
           <div className="absolute inset-0 -z-10 h-screen w-full">
             <div
@@ -42,10 +42,8 @@ export default function Hero(props: HeroProps & { className?: string }) {
               )}
             />
             <Image
-              src={`https://image.tmdb.org/t/p/original${
-                props.show?.backdrop_path ?? props.show?.poster_path ?? ''
-              }`}
-              alt={props.show?.title ?? 'poster'}
+              src={`https://image.tmdb.org/t/p/original${show?.backdrop_path || show?.poster_path || ''}`}
+              alt={show?.title || 'poster'}
               className="h-auto w-full object-cover"
               fill
               priority
@@ -53,18 +51,18 @@ export default function Hero(props: HeroProps & { className?: string }) {
           </div>
           <div className="grid max-w-lg space-y-2 pt-24">
             <h1 className="text-3xl font-bold md:text-4xl text-white">
-              {props.show?.title ?? props.show?.name}
+              {show?.title || show?.name}
             </h1>
             <div className="flex space-x-2 text-xs font-semibold md:text-sm">
               <p className="text-green-600">
-                {Number(props.show?.vote_average * 10).toFixed(2) ?? '-'}% Match
+                {Number(show?.vote_average * 10)?.toFixed(2) || '-'}% Match
               </p>
               <p className="text-gray-300">
-                {props.show?.first_air_date ?? props.show?.release_date ?? '-'}
+                {show?.first_air_date || show?.release_date || '-'}
               </p>
             </div>
             <p className="line-clamp-4 text-sm text-gray-300 md:text-base">
-              {props.show?.overview ?? '-'}
+              {show?.overview || '-'}
             </p>
             <div className="flex items-center space-x-2 pt-1.5">
               <button
@@ -86,35 +84,22 @@ export default function Hero(props: HeroProps & { className?: string }) {
             </div>
           </div>
         </div>
-        <ShowModal
-          toggle={toggle}
-          toggleHandler={setToggle}
-          show={props.show}
-        />
-      </>
-    );
-  } else {
-    banner = (
-      <div className="w-full max-w-screen-2xl mx-auto" >
-        
-        <div
-          className={tm(
-            'absolute inset-0 -z-10 h-screen w-full',
-            props.className ?? ''
-          )}
-        >
-          <Image
-            src={props.src}
-            alt="test"
-            className="h-auto w-full object-cover"
-            fill
-            priority
-          />
+      )}
+      {type === 'static' && (
+        <div className="w-full max-w-screen-2xl mx-auto">
+          <div className={tm('absolute inset-0 -z-10 h-screen w-full', className || '')}>
+            <Image
+              src={src}
+              alt="test"
+              className="h-auto w-full object-cover"
+              fill
+              priority
+            />
+          </div>
+          {children}
         </div>
-        {props.children}
-      </div>
-    );
-  }
-
-  return <section className="w-full">{banner}</section>;
+      )}
+      {toggle && <ShowModal toggle={toggle} toggleHandler={setToggle} show={show} />}
+    </section>
+  );
 }
