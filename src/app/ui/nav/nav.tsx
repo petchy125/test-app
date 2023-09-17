@@ -182,14 +182,9 @@ export function SignOutButton({
   children,
   ...restProps
 }: ButtonProps) {
-  const router = useRouter();
-
   return (
     <button
-      onClick={() => {
-        signOut();
-        router.push('/signin');
-      }}
+      onClick={() => signOut()}
       className={tm(
         'bg-transparent outline-none text-white hover:font-bold',
         className

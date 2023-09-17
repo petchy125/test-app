@@ -8,7 +8,7 @@ import ExclamationCircleIcon from '@/app/ui/icons/exclamation-circle';
 
 import type { Show } from '@/types';
 import ShowModal from './show-modal';
-import { useState } from 'react';
+import React,{ useState } from 'react';
 
 type HeroProps =
   | {
@@ -28,7 +28,7 @@ export default function Hero(props: HeroProps & { className?: string }) {
     setToggle(true);
   };
 
-  let banner!: JSX.Element;
+  let banner!: React.JSX.Element;
 
   if (props.type === 'show') {
     banner = props.show && (
