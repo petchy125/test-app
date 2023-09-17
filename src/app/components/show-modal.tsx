@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription,
-} from '@/app/ui/dialog';
+} from '@/app/container/dialog';
 import type { Show } from '@/types';
 import { usePathname } from 'next/navigation';
 

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import Card from '@/app/ui/card';
+import Card from '@/app/container/card';
 import { Show } from '../../types';
 import { getSafeImageUrl } from '@/lib/util';
 import ShowModal from './show-modal';

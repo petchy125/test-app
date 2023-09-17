@@ -8,7 +8,7 @@ type Credential = {
   password: string;
 };
 
-const authOptions = {
+export const authOptions = {
   pages: {
     signIn: '/signin',
   },

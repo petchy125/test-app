@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { signIn } from 'next-auth/react';
 import { auth } from '@/lib/firebase';
-import Form from '@/app/ui/form';
+import Form from '@/app/container/form';
 
 export default function SignUp() {
   const [error, setError] = useState(null);

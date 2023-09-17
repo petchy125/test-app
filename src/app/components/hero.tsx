@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import { twMerge as tm } from 'tailwind-merge';
-import PlayIcon from '@/app/ui/icons/play';
-import ExclamationCircleIcon from '@/app/ui/icons/exclamation-circle';
+import PlayIcon from '@/app/container/icons/play';
+import ExclamationCircleIcon from '@/app/container/icons/exclamation-circle';
 import { Show } from '@/types';
 import ShowModal from './show-modal';
 import React, { useState } from 'react';

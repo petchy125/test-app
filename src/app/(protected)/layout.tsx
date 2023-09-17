@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
-import { Nav } from '@/app/ui/nav';
-import Footer from '@/app/ui/footer';
+import { Nav } from '@/app/container/nav';
+import Footer from '@/app/container/footer';
 import { getServerSession } from 'next-auth';
 
 export default async function ProtectedLayout({ children }: PropsWithChildren) {

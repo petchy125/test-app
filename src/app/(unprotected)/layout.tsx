@@ -2,8 +2,8 @@ import { PropsWithChildren } from 'react';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
-import { Nav } from '@/app/ui/nav';
-import Footer from '@/app/ui/footer';
+import { Nav } from '@/app/container/nav';
+import Footer from '@/app/container/footer';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 
 export default async function UnprotectedLayout({
