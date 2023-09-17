@@ -1,18 +1,17 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { signOut } from 'next-auth/react';
+import Link, { LinkProps } from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { twMerge as tm } from 'tailwind-merge';
-import { HTMLAttributes, PropsWithChildren } from 'react';
+import Image from 'next/image';
+import { HTMLAttributes, PropsWithChildren, useState } from 'react';
 
 import logo from '../../../../public/logo.png';
 import searchIcon from '../../../../public/search.png';
 import { ButtonProps, DivProps, InputProps, TextLinkProps } from '@/types';
+import { signOut } from 'next-auth/react';
 
-export function Nav({ children }: PropsWithChildren) {
+export default function Nav({ children }: PropsWithChildren) {
   return <nav>{children}</nav>;
 }
 
@@ -56,13 +55,13 @@ export function ButtonLink(props: PropsWithChildren<LinkProps>) {
 
 export function TextLink(props: TextLinkProps) {
   const { children, className, ...restProps } = props;
-  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <Link
       className={tm(
         'text-white no-underline mr-[30px] font-normal cursor-pointer last-of-type:mr-0',
-        router.asPath === props.href ? 'font-bold' : '',
+        pathname === props.href ? 'font-bold' : '',
         className ?? ''
       )}
       {...restProps}
@@ -77,15 +76,10 @@ export function Search({
   className,
   ...restProps
 }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+  const pathname = usePathname();
   const router = useRouter();
   const [searchActive, setSearchActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-
-  const handleSearch = () => {
-    const newPathname = searchTerm ? `/search?query=${encodeURIComponent(searchTerm)}` : '/';
-    router.push(newPathname);
-  };
-
   return (
     <div className={tm('flex items-center', className)} {...restProps}>
       <SearchIcon
@@ -100,11 +94,17 @@ export function Search({
       </SearchIcon>
       <SearchInput
         value={searchTerm}
-        className={searchActive ? 'ml-[10px] p-[10px] opacity-100 w-[200px]' : ''}
+        className={
+          searchActive ? 'ml-[10px] p-[10px] opacity-100 w-[200px]' : ''
+        }
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search films and series"
         onKeyDown={(e) => {
-          if (e.key === 'Enter') handleSearch();
+          if (e.key !== 'Enter') return;
+          const newPathname = searchTerm
+            ? `${pathname}?search=${searchTerm}`
+            : pathname;
+          router.push(newPathname);
         }}
       />
     </div>
